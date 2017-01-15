@@ -28,6 +28,7 @@ import org.kde.kquickcontrolsaddons 2.0
 
 Item {
     id: main
+    z: model.selected ? 1 : 0
 
     property int index: model.index
     property string name: model.blank ? "" : model.display
@@ -271,7 +272,7 @@ Item {
                                     target: label
                                     anchors.topMargin: 2 * units.smallSpacing
                                     width: Math.min(labelMetrics.advanceWidth + units.smallSpacing, parent.width - units.smallSpacing * 8)
-                                    maximumLineCount: plasmoid.configuration.textLines
+                                    maximumLineCount: impl.selected ? 1000 : plasmoid.configuration.textLines
                                     horizontalAlignment: Text.AlignHCenter
                                 }
                             },
