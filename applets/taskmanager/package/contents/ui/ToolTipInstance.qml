@@ -156,7 +156,8 @@ Column {
         width: header.width
         // similar to 0.5625 = 1 / (16:9) as most screens are
         // round necessary, otherwise shadow mask for players has gap!
-        height: Math.round(0.5 * width)
+        height: Math.floor(windowThumbnail.thumbnailRatio * width)
+        // height: Math.round(0.5 * width)
         anchors.horizontalCenter: parent.horizontalCenter
 
         visible: isWin
@@ -170,7 +171,11 @@ Column {
             property int winId: isWin && windows[flatIndex] != undefined ? windows[flatIndex] : 0
 
             PlasmaCore.WindowThumbnail {
+                id: windowThumbnail
                 anchors.fill: parent
+                property real thumbnailRatio: thumbnailAvailable ? paintedHeight / paintedWidth : 0.5
+                onThumbnailRatioChanged: console.log('thumbnailRatio', thumbnailRatio, thumbnailAvailable, paintedWidth, paintedHeight)
+                onPaintedWidthChanged: console.log('paintedWidth', paintedWidth)
 
                 visible: !albumArtImage.visible && !thumbnailSourceItem.isMinimized
                 winId: thumbnailSourceItem.winId
